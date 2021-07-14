@@ -1,0 +1,51 @@
+//Create the requestBody object with the values to replace
+const object = {
+    name: “your name”,
+    desc: “your description”,
+    image: “https://yourdomain.com/1.png”
+};
+//Call the API with the above object as JSON in the request body
+const response = await fetch(“https://automationapi.wideo.co/automation/replace”, {
+   method: ‘POST’,
+   body: JSON.stringify({
+            data: object
+   }),
+   headers: {
+          ‘Content-Type’: ‘application/json’
+   }
+});
+//Parse response as JSON
+const replaceSaveResponse = response.json();
+
+//Get REPLACE_OBJECT_ID from response
+if (replaceSaveResponse.statusCode === 200) {
+   const replaceId = replaceSaveResponse.body.id;
+}
+
+//Create the requestBody object to download the video
+const requestBody = {
+   clientId: “YourName”, //only used for tracking purposes,
+   videos: [{
+       //The TEMPLATE_ID of the template you picked on first step
+       templateId: “TEMPLATE_ID”, 
+       //The REPLACE_OBJECT_ID you get from the previous step
+       replaceId: “REPLACE_OBJECT_ID” 
+   }]
+};
+
+//Call the API with the above object as JSON in the request body
+try {
+   const response = await fetch(“https://automationapi.wideo.co/automation/encode”, {
+       method: ‘POST’,
+       body: JSON.stringify(body),
+       headers: {
+           ‘Content-Type’: ‘application/json’
+       }
+   });
+   return await response.json();
+} catch (error) {
+   console.error(error);
+}
+
+//Get the video url
+response.videos[0].url;
